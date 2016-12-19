@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BrokerView.h"
+#include "BrokerController.h"
 
 BrokerView::BrokerView(BrokerModel *m, BrokerController *c)
 {
