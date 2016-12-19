@@ -17,6 +17,9 @@
     <ClCompile Include="BrokerView.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="DataQuery.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PoE-Broker.h">
@@ -37,6 +40,9 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="DataQuery.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PoE-Broker.rc" />
@@ -44,9 +50,6 @@
   <ItemGroup>
     <Image Include="PoE-Broker.ico" />
     <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -58,5 +61,8 @@
     <Filter Include="source">
       <UniqueIdentifier>{7fc45af4-f63d-4345-964b-6b5afda05a4d}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
