@@ -1,10 +1,11 @@
 #include "stdafx.h"
 
 #include <cpprest/http_client.h>
+#include "DataQuery.h"
+#include "DataManager.h"
+
 #include <cpprest/filestream.h>
 #include <cpprest/json.h>
-#include <iostream>
-#include <sstream>
 
 using namespace utility;                    // Common utilities like string conversions
 using namespace web;                        // Common features like URIs.
@@ -12,7 +13,12 @@ using namespace web::http;                  // Common HTTP functionality
 using namespace web::http::client;          // HTTP client features
 using namespace concurrency::streams;       // Asynchronous streams
 
-pplx::task<void> HTTPStreamingAsync()
+DataQuery::DataQuery(DataManager *m)
+{
+	manager = m;
+}
+
+pplx::task<void> DataQuery::GetStashTabs(std::string id)
 {
 	http_client client(L"http://api.pathofexile.com/public-stash-tabs");
 
@@ -21,28 +27,22 @@ pplx::task<void> HTTPStreamingAsync()
 	{
 		if (response.status_code() == status_codes::OK)
 		{
-			std::wcout << response.extract_string().get() << std::endl;
+			//std::wcout << response.extract_json().get() << std::endl;
 			return response.extract_json();
 		}
-		std::wcout << L"Error1" << std::endl;
 		// Handle error cases, for now return empty json value... 
 		return pplx::task_from_result(json::value());
 	})
-		.then([](json::value previousTask)
+		.then([this](pplx::task<json::value> previousTask)
 	{
 		try
 		{
-			std::wcout << L"Parse" << std::endl;
-			const json::value& v = previousTask;
-			std::wcout << L"Value:" << v.serialize() << std::endl;
+			const json::value& v = previousTask.get();
+			manager->handleDataQuery(v);
 		}
 		catch (const http_exception& e)
 		{
-			std::wcout << L"Error2" << std::endl;
-			// Print error.
-			std::wostringstream ss;
-			ss << e.what() << std::endl;
-			std::wcout << ss.str();
+			// Error.
 		}
 	});
 

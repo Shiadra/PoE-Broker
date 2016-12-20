@@ -144,6 +144,7 @@
     <ClInclude Include="BrokerController.h" />
     <ClInclude Include="BrokerModel.h" />
     <ClInclude Include="BrokerView.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="DataQuery.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="PoE-Broker.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="BrokerController.cpp" />
     <ClCompile Include="BrokerModel.cpp" />
     <ClCompile Include="BrokerView.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="DataQuery.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PoE-Broker.cpp" />

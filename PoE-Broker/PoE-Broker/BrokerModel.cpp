@@ -1,13 +1,9 @@
 #include "stdafx.h"
 #include "BrokerModel.h"
 
-#include "DataQuery.h"
+#include "DataManager.h"
 
 BrokerModel::BrokerModel(void)
 {
-	HTTPStreamingAsync().wait();
-	HTTPStreamingAsync().wait();
-	HTTPStreamingAsync().wait();
-	HTTPStreamingAsync().wait();
-	HTTPStreamingAsync().wait();
+	DataManager manager;
 }

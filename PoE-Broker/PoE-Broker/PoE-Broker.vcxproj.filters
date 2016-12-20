@@ -20,6 +20,9 @@
     <ClCompile Include="DataQuery.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PoE-Broker.h">
@@ -41,6 +44,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="DataQuery.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
