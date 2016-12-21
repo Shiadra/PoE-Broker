@@ -18,16 +18,18 @@ DataQuery::DataQuery(DataManager *m)
 	manager = m;
 }
 
-pplx::task<void> DataQuery::GetStashTabs(std::string id)
+pplx::task<void> DataQuery::GetStashTabs(utility::string_t id)
 {
-	http_client client(L"http://api.pathofexile.com/public-stash-tabs");
+	http_client client(U("http://api.pathofexile.com/public-stash-tabs/"));
 
+	uri_builder builder(U(""));
+	builder.append_query(U("id"), id);
 	// Make the request and asynchronously process the response. 
-	return client.request(methods::GET).then([](http_response response) -> pplx::task<json::value>
+	return client.request(methods::GET, builder.to_string()).then([](http_response response) -> pplx::task<json::value>
 	{
 		if (response.status_code() == status_codes::OK)
 		{
-			//std::wcout << response.extract_json().get() << std::endl;
+			std::cout << "Received" << std::endl;
 			return response.extract_json();
 		}
 		// Handle error cases, for now return empty json value... 
@@ -37,6 +39,7 @@ pplx::task<void> DataQuery::GetStashTabs(std::string id)
 	{
 		try
 		{
+			std::cout << "Extracted" << std::endl;
 			const json::value& v = previousTask.get();
 			manager->handleDataQuery(v);
 		}

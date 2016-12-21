@@ -5,5 +5,5 @@
 
 BrokerModel::BrokerModel(void)
 {
-	DataManager manager;
+	DataManager *manager = new DataManager();
 }

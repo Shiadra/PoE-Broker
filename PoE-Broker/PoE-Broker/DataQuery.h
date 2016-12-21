@@ -8,7 +8,7 @@ class DataQuery
 {
 public:
 	DataQuery(DataManager *m);
-	pplx::task<void> GetStashTabs(std::string id = "0");
+	pplx::task<void> GetStashTabs(utility::string_t id = U("0"));
 private:
 	DataManager *manager;
 

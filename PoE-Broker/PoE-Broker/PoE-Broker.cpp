@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Resource.h"
 
 #include "PoE-Broker.h"
 #include "BrokerController.h"

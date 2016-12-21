@@ -9,6 +9,7 @@ public:
 	DataManager();
 	~DataManager();
 	void handleDataQuery(web::json::value v);
+	utility::string_t DisplayJSONValue(web::json::value v);
 private:
 	DataQuery *query;
 };

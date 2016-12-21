@@ -16,4 +16,7 @@ public:
 private:
 	BrokerModel *model;
 	BrokerController *controller;
+	ATOM MyRegisterClass(HINSTANCE hInstance);
+	BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
+	static INT_PTR CALLBACK BrokerView::About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
