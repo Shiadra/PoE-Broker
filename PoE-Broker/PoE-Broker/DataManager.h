@@ -8,8 +8,9 @@ class DataManager
 public:
 	DataManager();
 	~DataManager();
-	void handleDataQuery(web::json::value v);
-	utility::string_t DisplayJSONValue(web::json::value v);
+	void handleDataQuery(web::json::value v, std::shared_ptr<std::chrono::steady_clock::time_point> pTime);
+	utility::string_t ParseJSON(web::json::value v);
 private:
 	DataQuery *query;
+	void DataManager::ParseStash(web::json::array *a, size_t lo, size_t hi);
 };
