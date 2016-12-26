@@ -5,6 +5,7 @@
 #include "BrokerController.h"
 #include "BrokerModel.h"
 #include "BrokerView.h"
+#include "Settings.h"
 
 #include <stdio.h>
 
@@ -19,11 +20,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	//Console for Debugging purposes
 	InitConsole();
-	BrokerModel model;
-	BrokerController controller(&model);
-	BrokerView view(&model, &controller);
-	controller.setView(&view);
-	return view.init(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	settings::init();
+	BrokerModel *model = new BrokerModel();
+	BrokerController *controller = new BrokerController(model);
+	BrokerView *view = new BrokerView(model, controller);
+	controller->setView(view);
+	int exit =  view->init(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	delete view;
+	delete controller;
+	delete model;
+	settings::save();
+	settings::remove();
+	return exit;
 }
 
 bool InitConsole()

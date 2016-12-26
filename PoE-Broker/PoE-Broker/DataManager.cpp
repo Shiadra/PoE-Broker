@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "DataManager.h"
+#include "Settings.h"
 #include <cpprest/filestream.h>
 #include <cpprest/json.h>
 #include <cpprest/http_client.h>
@@ -13,20 +14,23 @@ using namespace web;
 
 DataManager::DataManager()
 {
+	river = settings::get(L"river");
+	std::wcout << river << std::endl;
 	query = new DataQuery(this);
 	query->GetStashTabs();
 }
 
 DataManager::~DataManager()
 {
+	settings::set(L"river", river.c_str());
 	std::wcout << "destroying Data Manager" << std::endl;
 	delete query;
 }
 
 void DataManager::handleDataQuery(json::value v, std::shared_ptr<std::chrono::steady_clock::time_point> pTime)
 {
-	utility::string_t next_change_id = ParseJSON(v);
-	query->GetStashTabs(next_change_id, pTime);
+	river = ParseJSON(v);
+	query->GetStashTabs(river, pTime);
 }
 
 utility::string_t DataManager::ParseJSON(web::json::value v)

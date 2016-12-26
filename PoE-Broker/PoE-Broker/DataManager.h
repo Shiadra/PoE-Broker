@@ -12,5 +12,6 @@ public:
 	utility::string_t ParseJSON(web::json::value v);
 private:
 	DataQuery *query;
+	utility::string_t river;
 	void DataManager::ParseStash(web::json::array *a, size_t lo, size_t hi);
 };
