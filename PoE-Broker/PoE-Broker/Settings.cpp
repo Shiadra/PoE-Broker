@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <Shlobj.h>
+#include <Shlwapi.h>
 #include <iostream>
 
 using namespace rapidxml;
@@ -17,14 +18,26 @@ namespace settings
 	{
 		xml_document<wchar_t> *doc;
 		std::wstring filePath;
+		std::wstring dataPath;
+		PWSTR appPath;
 		std::vector<wchar_t> *m_data;
 	}
 
 	void init()
 	{
-		PWSTR appPath;
-		SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &appPath);
-		filePath = std::wstring(appPath) + L"\\PoEBroker-settings.xml";
+		if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_CREATE, NULL, &appPath)))
+		{
+			PathAppend(appPath, L"PoE Broker");
+			if (SHCreateDirectoryEx(NULL, appPath, NULL) != ERROR_SUCCESS)
+			{
+				std::cout << "Error at creating Folder" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Error at retrieving Folder Path" << std::endl;
+		}
+		filePath = std::wstring(appPath) + L"\\settings.xml";
 		doc = new xml_document<wchar_t>();
 		std::wifstream loadFile(filePath, std::ios::binary);
 		if (loadFile)
@@ -38,9 +51,7 @@ namespace settings
 			m_data->resize(size + 1);
 			loadFile.read(&m_data->front(), static_cast<std::streamsize>(size));
 			(*m_data)[size] = 0;
-			std::wcout << m_data->data() << std::endl;
 			doc->parse<rapidxml::parse_declaration_node>(m_data->data());
-			std::wcout << *doc << std::endl;
 			loadFile.close();
 		}
 		else
@@ -57,6 +68,8 @@ namespace settings
 		doc->append_node(decl);
 		xml_node<wchar_t> *node = doc->allocate_node(node_element, L"settings");
 		node->append_attribute(doc->allocate_attribute(L"river", L"0"));
+		dataPath = std::wstring(appPath) + L"\\database.sqlite3";
+		node->append_attribute(doc->allocate_attribute(L"database", dataPath.c_str()));
 		doc->append_node(node);
 	}
 
@@ -77,6 +90,17 @@ namespace settings
 	const wchar_t* get(const wchar_t* key)
 	{
 		return doc->first_node(L"settings")->first_attribute(key)->value();
+	}
+
+	const char* get8(const wchar_t* key)
+	{
+		const wchar_t * val = get(key);
+		size_t inputSize = wcslen(val);
+		size_t outputSize = inputSize+1;
+		char *outputString = new char[outputSize];
+		size_t charsConverted = 0;
+		wcstombs_s(&charsConverted, outputString, outputSize, val, inputSize);
+		return outputString;
 	}
 
 	void set(const wchar_t* key, const wchar_t* value)

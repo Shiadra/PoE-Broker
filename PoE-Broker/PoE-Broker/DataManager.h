@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DataQuery.h"
+#include "Database.h"
 #include <cpprest/json.h>
 
 class DataManager
@@ -12,6 +13,7 @@ public:
 	utility::string_t ParseJSON(web::json::value v);
 private:
 	DataQuery *query;
+	Database *dataBase;
 	utility::string_t river;
 	void DataManager::ParseStash(web::json::array *a, size_t lo, size_t hi);
 };

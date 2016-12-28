@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "DataManager.h"
+#include "Database.h"
 #include "Settings.h"
 #include <cpprest/filestream.h>
 #include <cpprest/json.h>
@@ -14,8 +15,8 @@ using namespace web;
 
 DataManager::DataManager()
 {
+	dataBase = new Database();
 	river = settings::get(L"river");
-	std::wcout << river << std::endl;
 	query = new DataQuery(this);
 	query->GetStashTabs();
 }
@@ -25,6 +26,7 @@ DataManager::~DataManager()
 	settings::set(L"river", river.c_str());
 	std::wcout << "destroying Data Manager" << std::endl;
 	delete query;
+	delete dataBase;
 }
 
 void DataManager::handleDataQuery(json::value v, std::shared_ptr<std::chrono::steady_clock::time_point> pTime)

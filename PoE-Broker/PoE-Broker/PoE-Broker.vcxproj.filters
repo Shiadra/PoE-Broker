@@ -26,6 +26,9 @@
     <ClCompile Include="Settings.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PoE-Broker.h">
@@ -53,6 +56,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Settings.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
